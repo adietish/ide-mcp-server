@@ -1,0 +1,57 @@
+{
+  "name": "vscode-remotecontrol",
+  "displayName": "vscode-remotecontrol",
+  "description": "vscode remote control",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-remotecontrol.startServer",
+        "title": "Start vscode remotecontrol server"
+      },
+      {
+        "command": "socket-command-listener.stopServer",
+        "title": "Stop vscode remotecontrol server"
+      }
+    ],
+    "configuration": {
+      "title": "vscode remotecontrol",
+      "properties": {
+        "vscode-remotecontrol.port": {
+        "type": "number",
+        "default": 12345,
+          "description": "The port on which the vscode remotecontrol server will listen."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test",
+    "prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.88.0",
+    "@types/node": "^18.19.26",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
