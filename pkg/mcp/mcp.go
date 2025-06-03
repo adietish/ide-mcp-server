@@ -1,7 +1,10 @@
 package mcp
 
 import (
+	"slices"
+
 	"github.com/adietish/ide-mcp-server/pkg/version"
+	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 )
 
@@ -20,6 +23,9 @@ func NewSever() (*Server, error) {
 			server.WithLogging(),
 		),
 	}
+	s.server.AddTools(slices.Concat(
+		s.initVScode(),
+	)...)
 	return s, nil
 }
 
@@ -33,4 +39,26 @@ func (s *Server) ServeSse(baseUrl string) *server.SSEServer {
 		options = append(options, server.WithBaseURL(baseUrl))
 	}
 	return server.NewSSEServer(s.server, options...)
+}
+
+func NewTextResult(content string, err error) *mcp.CallToolResult {
+	if err != nil {
+		return &mcp.CallToolResult{
+			IsError: true,
+			Content: []mcp.Content{
+				mcp.TextContent{
+					Type: "text",
+					Text: err.Error(),
+				},
+			},
+		}
+	}
+	return &mcp.CallToolResult{
+		Content: []mcp.Content{
+			mcp.TextContent{
+				Type: "text",
+				Text: content,
+			},
+		},
+	}
 }
