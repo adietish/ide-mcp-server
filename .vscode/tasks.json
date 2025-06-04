@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm: watch",
+            "type": "shell",
+            "command": "npm",
+            "args": ["run", "watch"],
+            "options": {
+                "cwd": "${workspaceFolder}/vscode-remotecontrol"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        }
+    ]
+}
