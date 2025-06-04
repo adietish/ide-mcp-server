@@ -32,17 +32,17 @@ export function startSocketServer(port: number) {
     });
 
     server.listen(port, () => {
-        console.log(`Socket server listening on port ${port}`);
-        vscode.window.showInformationMessage(`Socket Command Listener started on port ${port}.`);
+        console.log(`Remote control listening on port ${port}.`);
+        vscode.window.showInformationMessage(`Remote control listening on port ${port}.`);
     });
 
     server.on('error', (err: NodeJS.ErrnoException) => {
         if (err.code === 'EADDRINUSE') {
             vscode.window.showErrorMessage(`Port ${port} is already in use. Please choose a different port in settings.`);
         } else {
-            vscode.window.showErrorMessage(`Server error: ${err.message}`);
+            vscode.window.showErrorMessage(`Remote control error: ${err.message}`);
         }
-        console.error(`Server error: ${err.message}`);
+        console.error(`Remote control error: ${err.message}`);
         server = undefined;
     });
 }
@@ -65,9 +65,9 @@ function onReceived(data: Buffer) {
             if (args.length < 1) {
                 break;
             }
-            
+            let content = args.join(' ');
             vscode.workspace
-                .openTextDocument({ content: args[0], language: 'yaml' })
+                .openTextDocument({ content: content, language: 'yaml' })
                 .then(document => {
                     vscode.window.showTextDocument(document);
                 });
